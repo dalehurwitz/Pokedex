@@ -4,7 +4,7 @@ var gulp = require("gulp"),
     babelify = require("babelify"),
     source = require("vinyl-source-stream"),
     history = require('connect-history-api-fallback');
-    
+
 var config = {
     port: 3009,
     paths: {
@@ -21,14 +21,14 @@ gulp.task("default", ["browserSync"], function() {
 gulp.task("build", function () {
     browserify({ entries: config.paths.entry, debug: true })
         .transform("babelify", {presets: ["es2015", "react"]})
+        .on("error", console.log.bind(console))
         .bundle()
         .pipe(source("bundle.js"))
         .pipe(gulp.dest(config.paths.dist + "/js"))
         .pipe(browserSync.stream())
-        .on("error", console.error.bind(console));
 });
 
-gulp.task("browserSync", function () {    
+gulp.task("browserSync", function () {
     browserSync.init({
         port: config.port,
         server: {
