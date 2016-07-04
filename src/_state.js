@@ -1,6 +1,8 @@
 {
-    pokemon: [],
-    loadingPokemon: false,
+    allPokemon: {
+        loadingPokemon: false,
+        pokemon: []
+    },
     selectedPokemon: 200,
     pokemonDetailed: {
         1: {

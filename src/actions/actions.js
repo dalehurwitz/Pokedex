@@ -1,9 +1,20 @@
+import PokeApi from "../api/PokeApi";
+
 const actions = {};
 
-actions.GET_POKEMON = "GET_POKEMON";
-actions.getPokemon = () => {
+/** Initial load / Load more **/
+
+actions.LOAD_MORE_POKEMON = "LOAD_MORE_POKEMON";
+actions.loadMorePokemon = () => {
     return {
-        type: actions.GET_POKEMON
+        type: actions.LOAD_MORE_POKEMON
+    }
+}
+
+actions.REQUEST_POKEMON = "REQUEST_POKEMON";
+actions.requestPokemon = () => {
+    return {
+        type: actions.REQUEST_POKEMON
     }
 }
 
@@ -15,10 +26,30 @@ actions.receivePokemon = (response) => {
     }
 }
 
-actions.GET_A_POKEMON = "GET_A_POKEMON";
-actions.getAPokemon = (id) => {
+actions.getPokemom = (url = "http://pokeapi.co/api/v2/pokemon/?limit=15") => {
+    return (dispatch) => {
+        dispatch(actions.requestPokemon());
+        return PokeApi.getAllPokemon(url)
+            .then(data => {
+                dispatch(actions.receivePokemon(data))
+            });
+    }
+}
+
+/** Select individual pokemon **/
+
+actions.SELECT_A_POKEMON = "SELECT_A_POKEMON";
+actions.requestAPokemon = (id) => {
     return {
-        type: actions.GET_A_POKEMON,
+        type: actions.SELECT_A_POKEMON,
+        id
+    }
+}
+
+actions.REQUEST_A_POKEMON = "REQUEST_A_POKEMON";
+actions.requestAPokemon = (id) => {
+    return {
+        type: actions.REQUEST_A_POKEMON,
         id
     }
 }
