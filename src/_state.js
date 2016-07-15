@@ -3,6 +3,7 @@
         loadingPokemon: false,
         pokemon: []
     },
+    featuredPokemon: 1,
     selectedPokemon: 200,
     pokemonDetailed: {
         1: {

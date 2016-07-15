@@ -9,7 +9,7 @@ var config = {
     port: 3009,
     paths: {
         dist: "./dist",
-        entry: "./src/app.js",
+        entry: "./src/index.js",
         js: "./src/**/*.js"
     }
 }

@@ -1,5 +1,5 @@
 const config = {
-    POKERMON_PER_LOAD: 12
+    POKERMON_PER_LOAD: 20
 };
 
-export config;
+export default config;

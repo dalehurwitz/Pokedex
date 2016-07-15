@@ -5,7 +5,14 @@ class PokeApi {
         return "http://pokeapi.co/api/v2/"
     }
     
-    static getAllPokemon(url) {
+    static getAllPokemon(params) {
+        let url;
+        
+        if(typeof params === "string") {
+            url = params;
+        } else {
+            url = `${PokeApi.baseUrl}pokemon/${PokeApi.serialise(params)}`;
+        }
         return Ajax.get(url);
     }
     

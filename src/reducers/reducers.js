@@ -19,6 +19,7 @@ function loadMorePokemon(state, action) {
         case actions.RECEIVE_POKEMON:
             return Object.assign({}, state, {
                 pokemon: state.pokemon.concat(action.pokemon),
+                nextLoadUrl: action.nextLoadUrl,
                 loadingPokemon: false
             });
         default:

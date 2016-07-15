@@ -1,4 +1,5 @@
 import PokeApi from "../api/PokeApi";
+import config from "../config.js";
 
 const actions = {};
 
@@ -22,14 +23,24 @@ actions.RECEIVE_POKEMON = "RECEIVE_POKEMON";
 actions.receivePokemon = (response) => {
     return {
         type: actions.RECEIVE_POKEMON,
-        pokemon: response.results.slice()
+        pokemon: response.results.slice(),
+        nextLoadUrl: response.next
     }
 }
 
-actions.getPokemom = (url = "http://pokeapi.co/api/v2/pokemon/?limit=15") => {
-    return (dispatch) => {
+actions.getPokemom = () => {
+    return (dispatch, getState) => {
+        var params;
         dispatch(actions.requestPokemon());
-        return PokeApi.getAllPokemon(url)
+        var nextLoadUrl = getState().allPokemon.nextLoadUrl;
+        if(nextLoadUrl) {
+            params = nextLoadUrl;
+        } else {
+            params = {
+                limit: config.POKERMON_PER_LOAD
+            };
+        }
+        return PokeApi.getAllPokemon(params)
             .then(data => {
                 dispatch(actions.receivePokemon(data))
             });
