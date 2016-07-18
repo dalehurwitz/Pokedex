@@ -8,7 +8,6 @@ const loggerMiddleware = createLogger();
 function configureStore(initialState) {
     return createStore(
         rootReducer,
-        initialState,
         applyMiddleware(
             thunkMiddleware,
             loggerMiddleware

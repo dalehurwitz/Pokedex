@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-const App = ({ children }) => {
+const Home = ({ pokemon }) => {
     return (
         <div>
-            {children}
+            <h1>Pokedex</h1>
         </div>
     )
 };
 
-export default App;
+export default Home;

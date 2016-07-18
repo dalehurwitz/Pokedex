@@ -3,14 +3,7 @@ import config from "../config.js";
 
 const actions = {};
 
-/** Initial load / Load more **/
-
-actions.LOAD_MORE_POKEMON = "LOAD_MORE_POKEMON";
-actions.loadMorePokemon = () => {
-    return {
-        type: actions.LOAD_MORE_POKEMON
-    }
-}
+/** Get many pokemon **/
 
 actions.REQUEST_POKEMON = "REQUEST_POKEMON";
 actions.requestPokemon = () => {
@@ -47,7 +40,7 @@ actions.getPokemom = () => {
     }
 }
 
-/** Select individual pokemon **/
+/** Get individual pokemon **/
 
 actions.SELECT_A_POKEMON = "SELECT_A_POKEMON";
 actions.requestAPokemon = (id) => {
@@ -71,6 +64,18 @@ actions.receiveAPokemon = (id, response) => {
         type: actions.RECEIVE_A_POKEMON,
         pokemon: response.results.slice(),
         id
+    }
+}
+
+/** init app **/
+
+actions.initApp = () => {
+    return (dispatch, getState) => {
+        var state = getState();
+        if(state.featuredPokemon && state.pokemonDetailed[state.featuredPokemon].loading === false) {
+            return Promise.resolve();
+        }
+        //to complete
     }
 }
 
