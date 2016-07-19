@@ -35,20 +35,12 @@ actions.getPokemom = () => {
         }
         return PokeApi.getAllPokemon(params)
             .then(data => {
-                dispatch(actions.receivePokemon(data))
+                dispatch(actions.receivePokemon(data));
             });
     }
-}
+};
 
 /** Get individual pokemon **/
-
-actions.SELECT_A_POKEMON = "SELECT_A_POKEMON";
-actions.requestAPokemon = (id) => {
-    return {
-        type: actions.SELECT_A_POKEMON,
-        id
-    }
-}
 
 actions.REQUEST_A_POKEMON = "REQUEST_A_POKEMON";
 actions.requestAPokemon = (id) => {
@@ -62,20 +54,35 @@ actions.RECEIVE_A_POKEMON = "RECEIVE_A_POKEMON";
 actions.receiveAPokemon = (id, response) => {
     return {
         type: actions.RECEIVE_A_POKEMON,
-        pokemon: response.results.slice(),
+        pokemon: response,
         id
     }
 }
+
+actions.getAPokemom = (id) => {
+    return (dispatch, getState) => {
+        if(typeof id === "string") {
+            var splitUrl = id.split("/");
+            id = splitUrl[splitUrl.length-2];
+        }
+        
+        if(!getState().pokemonDetailed || !getState().pokemonDetailed[id].data) {
+            dispatch(actions.requestAPokemon(id));
+            return PokeApi.getAPokemom(id)
+                .then(data => {
+                    dispatch(actions.receiveAPokemon(data));
+                });
+        }
+    }
+};
 
 /** init app **/
 
 actions.initApp = () => {
     return (dispatch, getState) => {
-        var state = getState();
-        if(state.featuredPokemon && state.pokemonDetailed[state.featuredPokemon].loading === false) {
-            return Promise.resolve();
+        if(getState().allPokemon.pokemon.length < config.POKERMON_PER_LOAD) {
+            dispatch(actions.getPokemom());
         }
-        //to complete
     }
 }
 

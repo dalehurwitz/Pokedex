@@ -1,27 +1,18 @@
 import { combineReducers } from "redux";
 import actions from "../actions/actions";
 
-function selectAPokemon(state = 1, action) {
-    switch (action.type) {
-        case actions.GET_A_POKEMON:
-            return action.id;
-        default:
-            return state;
-    }
-}
-
 function loadMorePokemon(state, action) {
     switch(action.type) {
         case actions.REQUEST_POKEMON:
-            return Object.assign({}, state, {
+            return {
                 loadingPokemon: true
-            });
+            };
         case actions.RECEIVE_POKEMON:
-            return Object.assign({}, state, {
+            return {
                 pokemon: state.pokemon.concat(action.pokemon),
                 nextLoadUrl: action.nextLoadUrl,
                 loadingPokemon: false
-            });
+            };
         default:
             return state;
     }
@@ -40,8 +31,38 @@ function allPokemon(state = {
     }
 }
 
+function loadAPokemon(state, action) {
+    switch(action.type) {
+        case actions.REQUEST_A_POKEMON:
+            var newPokemon = {};
+            newPokemon[action.id] = {
+                loading: true
+            };
+            return Object.assign({}, state, newPokemon);
+        case actions.RECEIVE_A_POKEMON:
+            var pokemon = state[action.id];
+            return {
+                loading: false,
+                data: action.response
+            };
+        default:
+            return state;
+    }
+}
+
+function pokemonDetailed(state = {}, action) {
+    switch(action.type) {
+        case actions.REQUEST_A_POKEMON:
+        case actions.RECEIVE_A_POKEMON:
+            return Object.assign({}, state, loadAPokemon(state, action));
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
-    allPokemon
+    allPokemon,
+    pokemonDetailed
 });
 
 export default rootReducer;

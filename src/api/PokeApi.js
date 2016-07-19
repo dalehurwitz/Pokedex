@@ -16,6 +16,18 @@ class PokeApi {
         return Ajax.get(url);
     }
     
+    static getAPokemom(id) {
+        let url;
+        
+        if(typeof id === "string") {
+            url = string;
+        } else {
+            url = `${PokeApi.baseUrl}pokemon/${id}/`;
+        }
+        
+        return Ajax.get(url);
+    }
+    
     static serialise(options) {
         return Object.keys(options).reduce((previousValue, currentKey, index) => {
             let prefix = (index === 0) ? "" : "&";

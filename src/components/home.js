@@ -1,11 +1,22 @@
 import React, { Component } from "react";
+import actions from "../actions/actions";
+import { connect } from "react-redux";
+import PokemonList from "./pokemon/pokemonList";
 
-const Home = ({ pokemon }) => {
-    return (
-        <div>
-            <h1>Pokedex</h1>
-        </div>
-    )
-};
+class Home extends Component {
+    componentWillMount() {
+        this.props.dispatch(actions.initApp());
+        this.props.dispatch(actions.getAPokemom(212));
+    }
 
-export default Home;
+    render() {
+        return (
+            <div>
+                <h1>Pokedex</h1>
+                <PokemonList />
+            </div>
+        );
+    }
+}
+
+export default connect()(Home);
