@@ -7,6 +7,7 @@ class Home extends Component {
     componentWillMount() {
         this.props.dispatch(actions.initApp());
         this.props.dispatch(actions.getAPokemom(212));
+        this.props.dispatch(actions.getAPokemom(412));
     }
 
     render() {

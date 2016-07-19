@@ -3,7 +3,9 @@ var gulp = require("gulp"),
     browserify = require("browserify"),
     babelify = require("babelify"),
     source = require("vinyl-source-stream"),
-    history = require('connect-history-api-fallback');
+    buffer = require("vinyl-buffer"),
+    history = require("connect-history-api-fallback"),
+    uglify = require("gulp-uglify");
 
 var config = {
     port: 3009,
@@ -19,11 +21,17 @@ gulp.task("default", ["browserSync"], function() {
 });
 
 gulp.task("build", function () {
+    // process.env.NODE_ENV = 'production';
     browserify({ entries: config.paths.entry, debug: true })
-        .transform("babelify", {presets: ["es2015", "react"]})
+        .transform("babelify", {
+            presets: ["es2015", "react"],
+            plugins: ["transform-object-rest-spread"],
+        })
         .on("error", console.log.bind(console))
         .bundle()
         .pipe(source("bundle.js"))
+        // .pipe(buffer())
+        // .pipe(uglify())
         .pipe(gulp.dest(config.paths.dist + "/js"))
         .pipe(browserSync.stream())
 });

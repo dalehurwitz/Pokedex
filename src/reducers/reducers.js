@@ -40,11 +40,12 @@ function loadAPokemon(state, action) {
             };
             return Object.assign({}, state, newPokemon);
         case actions.RECEIVE_A_POKEMON:
-            var pokemon = state[action.id];
-            return {
-                loading: false,
-                data: action.response
+            var pokemon = {};
+            pokemon[action.id] = {
+                ...action.pokemon,
+                loading: false
             };
+            return Object.assign({}, state, pokemon);
         default:
             return state;
     }

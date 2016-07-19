@@ -65,12 +65,12 @@ actions.getAPokemom = (id) => {
             var splitUrl = id.split("/");
             id = splitUrl[splitUrl.length-2];
         }
-        
-        if(!getState().pokemonDetailed || !getState().pokemonDetailed[id].data) {
+        var state = getState();
+        if(!state.pokemonDetailed || !state.pokemonDetailed[id] || !state.pokemonDetailed[id].data) {
             dispatch(actions.requestAPokemon(id));
             return PokeApi.getAPokemom(id)
                 .then(data => {
-                    dispatch(actions.receiveAPokemon(data));
+                    dispatch(actions.receiveAPokemon(id, data));
                 });
         }
     }
