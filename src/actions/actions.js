@@ -56,7 +56,15 @@ actions.receiveAPokemon = (id, response) => {
         type: actions.RECEIVE_A_POKEMON,
         pokemon: response,
         id
-    }
+    };
+}
+
+actions.RECEIVE_A_POKEMON_AND_TYPES = "RECEIVE_A_POKEMON_AND_TYPES";
+actions.receiveAPokemonAndTypes = (id) => {
+    return {
+        type: actions.RECEIVE_A_POKEMON_AND_TYPES,
+        id
+    };
 }
 
 actions.getAPokemom = (id) => {
@@ -72,9 +80,67 @@ actions.getAPokemom = (id) => {
                 .then(data => {
                     dispatch(actions.receiveAPokemon(id, data));
                 });
+        } else {
+            return Promise.resolve();
+        }
+    };
+};
+
+/*
+    Pokemon may have several types, i.e. "bug", "steel". We need to fetch the pokemon first,
+    then we need to fetch the data for all of its types. Only then has the pokemon finished 'loading'
+*/
+actions.getAPokemonAndTypes = (id) => {
+    return (dispatch, getState) => {
+        dispatch(actions.getAPokemom(id))
+            .then(() => {
+                let state = getState(),
+                    typePromises = [];
+                //Create a promise for each pokemon 'type'
+                state.pokemonDetailed[id].data.types.forEach(type => {
+                    typePromises.push(dispatch(actions.getPokemonType(type.type.name)));
+                });
+                return Promise.all(typePromises);
+            })
+            .then(() => {
+                dispatch(actions.receiveAPokemonAndTypes(id));
+            });
+    };
+};
+
+/*** Get Pokemon types ***/
+
+actions.REQUEST_POKEMON_TYPE = "REQUEST_POKEMON_TYPE";
+actions.requestPokemonType = (typeName) => {
+    return {
+        type: actions.REQUEST_POKEMON_TYPE,
+        typeName: typeName
+    }
+}
+
+actions.RECEIVE_POKEMON_TYPE = "RECEIVE_POKEMON_TYPE";
+actions.receivePokemonType = (typeName, response) => {
+    return {
+        type: actions.RECEIVE_POKEMON_TYPE,
+        typeName: typeName,
+        pokemonType: response
+    };
+}
+
+actions.getPokemonType = (typeName) => {
+    return (dispatch, getState) => {
+        let state = getState();
+        if(!state.pokemonTypes || !state.pokemonTypes[typeName]) {
+            dispatch(actions.requestPokemonType(typeName));
+            return PokeApi.getPokemonType(typeName)
+                .then(data => {
+                    dispatch(actions.receivePokemonType(typeName, data));
+                });
+        } else {
+            return Promise.resolve();
         }
     }
-};
+}
 
 /** init app **/
 

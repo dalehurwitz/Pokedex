@@ -5,7 +5,8 @@ const state = {
     },
     featuredPokemon: null,
     selectedPokemon: null,
-    pokemonDetailed: {}
+    pokemonDetailed: {},
+    pokemonTypes: {}
 };
 
 export default state;

@@ -34,18 +34,27 @@ function allPokemon(state = {
 function loadAPokemon(state, action) {
     switch(action.type) {
         case actions.REQUEST_A_POKEMON:
-            var newPokemon = {};
-            newPokemon[action.id] = {
-                loading: true
-            };
-            return Object.assign({}, state, newPokemon);
+            return Object.assign({}, state, {
+                [action.id]: {
+                    loading: true
+                }
+            });
         case actions.RECEIVE_A_POKEMON:
-            var pokemon = {};
-            pokemon[action.id] = {
-                ...action.pokemon,
-                loading: false
-            };
-            return Object.assign({}, state, pokemon);
+            return Object.assign({}, state, {
+                [action.id]: {
+                    ...state[action.id],
+                    data: {
+                        ...action.pokemon
+                    }
+                }
+            });
+        case actions.RECEIVE_A_POKEMON_AND_TYPES:
+            return Object.assign({}, state, {
+                [action.id]: {
+                    ...state[action.id],
+                    loading: false
+                }
+            });
         default:
             return state;
     }
@@ -55,7 +64,36 @@ function pokemonDetailed(state = {}, action) {
     switch(action.type) {
         case actions.REQUEST_A_POKEMON:
         case actions.RECEIVE_A_POKEMON:
+        case actions.RECEIVE_A_POKEMON_AND_TYPES:
             return Object.assign({}, state, loadAPokemon(state, action));
+        default:
+            return state;
+    }
+}
+
+function loadPokemonType(state, action) {
+    switch(action.type) {
+        case actions.REQUEST_POKEMON_TYPE:
+            return Object.assign({}, state, {
+                [action.typeName]: {
+                    loading: true
+                }
+            });
+        case actions.RECEIVE_POKEMON_TYPE:
+            return Object.assign({}, state, {
+                [action.typeName]: {
+                    loading: false,
+                    ...action.pokemonType
+                }
+            });
+    }
+}
+
+function pokemonTypes(state = {}, action) {
+    switch(action.type) {
+        case actions.RECEIVE_POKEMON_TYPE:
+        case actions.REQUEST_POKEMON_TYPE:
+            return Object.assign({}, state, loadPokemonType(state, action));
         default:
             return state;
     }
@@ -63,7 +101,8 @@ function pokemonDetailed(state = {}, action) {
 
 const rootReducer = combineReducers({
     allPokemon,
-    pokemonDetailed
+    pokemonDetailed,
+    pokemonTypes
 });
 
 export default rootReducer;
