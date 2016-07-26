@@ -5,13 +5,13 @@ function loadMorePokemon(state, action) {
     switch(action.type) {
         case actions.REQUEST_POKEMON:
             return {
-                loadingPokemon: true
+                loading: true
             };
         case actions.RECEIVE_POKEMON:
             return {
                 pokemon: state.pokemon.concat(action.pokemon),
                 nextLoadUrl: action.nextLoadUrl,
-                loadingPokemon: false
+                loading: false
             };
         default:
             return state;
@@ -20,7 +20,7 @@ function loadMorePokemon(state, action) {
 
 function allPokemon(state = {
     pokemon: [],
-    loadingPokemon: false
+    loading: false
 }, action) {
     switch(action.type) {
         case actions.REQUEST_POKEMON:
@@ -36,7 +36,8 @@ function loadAPokemon(state, action) {
         case actions.REQUEST_A_POKEMON:
             return Object.assign({}, state, {
                 [action.id]: {
-                    loading: true
+                    loading: true,
+                    data: {}
                 }
             });
         case actions.RECEIVE_A_POKEMON:
@@ -99,10 +100,24 @@ function pokemonTypes(state = {}, action) {
     }
 }
 
+/** Home **/
+
+function home(state = {}, action) {
+    switch(action.type) {
+        case actions.SET_FEATURED_POKEMON:
+            return {
+                featuredPokemon: action.id
+            };
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
     allPokemon,
     pokemonDetailed,
-    pokemonTypes
+    pokemonTypes,
+    home
 });
 
 export default rootReducer;

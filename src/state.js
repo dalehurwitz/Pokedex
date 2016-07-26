@@ -3,10 +3,13 @@ const state = {
         loadingPokemon: false,
         pokemon: []
     },
-    featuredPokemon: null,
     selectedPokemon: null,
     pokemonDetailed: {},
-    pokemonTypes: {}
+    pokemonTypes: {},
+    home: {
+        featuredPokemon: null,
+        pokemonVisible: 20
+    }
 };
 
 export default state;

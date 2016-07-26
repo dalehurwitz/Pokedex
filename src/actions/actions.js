@@ -142,13 +142,37 @@ actions.getPokemonType = (typeName) => {
     }
 }
 
+/** Home **/
+
+actions.SET_FEATURED_POKEMON = "SET_FEATURED_POKEMON";
+actions.setFeaturedPokemon = (id) => {
+    return {
+        type: actions.SET_FEATURED_POKEMON,
+        id
+    };
+}
+
+actions.loadFeaturedPokemon = () => {
+    let randomPokemonId = Math.ceil(Math.random() * config.TOTAL_POKEMON);
+    return (dispatch) => {
+        dispatch(actions.setFeaturedPokemon(randomPokemonId));
+        dispatch(actions.getAPokemonAndTypes(randomPokemonId));
+    };
+}
+
 /** init app **/
 
 actions.initApp = () => {
     return (dispatch, getState) => {
-        if(getState().allPokemon.pokemon.length < config.POKERMON_PER_LOAD) {
+        let state = getState();
+
+        if(state.allPokemon.pokemon.length < config.POKERMON_PER_LOAD) {
             dispatch(actions.getPokemom());
         }
+
+        if(!state.home || !state.home.featuredPokemon) {
+            dispatch(actions.loadFeaturedPokemon());
+        } 
     }
 }
 
