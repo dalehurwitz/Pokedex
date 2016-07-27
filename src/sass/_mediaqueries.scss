@@ -1,0 +1,30 @@
+$mobileW: map-get($breakpoints, xs);
+$tabletW: map-get($breakpoints, sm);
+$desktopW: map-get($breakpoints, lg);
+
+$tablet: (min-width: #{tabletW});
+$desktop: (min-width: #{desktopW});
+
+@mixin mobile {
+    @media (min-width: #{$mobileW}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tabletW}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktopW}) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (max-width: #{$tabletW}-1) {
+        @content;
+    }
+}

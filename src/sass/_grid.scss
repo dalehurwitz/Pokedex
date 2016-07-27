@@ -1,0 +1,37 @@
+$gutters: 20px;
+$columns: 6;
+$breakpoints: (
+    xs: 500px,
+    sm: 768px,
+    lg: 1024px
+);
+$containerWidths: (
+    xs: 0,
+    sm: 768px,
+    lg: 960px
+);
+
+// .container,
+// .row {
+//     @include clearfix;
+// }
+
+.container {
+    margin: 0 auto;
+    position: relative;
+    @each $breakpoint in map-keys($breakpoints) {
+        $w: map-get($breakpoints, $breakpoint);
+        $mobKey: xs;
+        $mobW: map-get($breakpoints, $mobKey);
+        @if $w>$mobW {
+            @media (min-width: $w) {
+                $conW: map-get($containerWidths, $breakpoint);
+                width: $conW;
+            }
+        }
+    }
+}
+
+.wrapper {
+    padding: 0 $gutters;
+}
