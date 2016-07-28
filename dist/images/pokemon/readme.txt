@@ -1,0 +1,1 @@
+Run 'dl-images' (project root) from command line to download all Pokemon images.
