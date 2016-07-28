@@ -1,6 +1,6 @@
 @ECHO OFF
 setlocal enabledelayedexpansion
-for /L %%n in (1,1,20) do (
+for /L %%n in (1,1,720) do (
     SET ID=%%n
     IF %%n LSS 10 (
         SET ID=00%%n
