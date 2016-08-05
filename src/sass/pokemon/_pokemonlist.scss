@@ -20,10 +20,7 @@
         width: 50%;
         padding: 10px;
         @include mobile {
-            width:33.333%;
-        }
-        @include tablet {
-            width: 25%;
+            width:25%;
         }
         @include desktop {
             width: 20%;

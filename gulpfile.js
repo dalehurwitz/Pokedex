@@ -15,7 +15,7 @@ var config = {
     paths: {
         dist: "./dist",
         entry: "./src/js/index.js",
-        js: "./src/js/**/*.js",
+        js: "src/js/**/*.js",
         sass: "src/sass/**/*.scss",
         sassMain: "./src/sass/main.scss"
     }

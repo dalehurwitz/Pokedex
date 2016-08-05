@@ -4,8 +4,10 @@ import PokemonCard from "./pokemonCard";
 
 const pokemonFeatured = ({ pokemon }) => {
     return (
-        <PokemonCard 
+        <PokemonCard
+            miniCard="true"
             pokemon={pokemon}
+            title="Featured Pokemon"
         />
     );
 }
