@@ -17,7 +17,7 @@ const PokeUtilities = {
         }
 
         inches = remainder ? `${remainder}\"` : "";
-        
+
         return {
             metric: `${centimetres}cm`,
             imperial: `${feet}' ${inches}`

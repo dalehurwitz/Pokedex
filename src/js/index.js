@@ -15,4 +15,4 @@ render(
     document.getElementById("app")
 );
 
-// store.dispatch(actions.getPokemom());
+// store.dispatch(actions.getPokemon());

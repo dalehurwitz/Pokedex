@@ -21,11 +21,13 @@ actions.receivePokemon = (response) => {
     }
 }
 
-actions.getPokemom = () => {
+actions.getPokemon = () => {
     return (dispatch, getState) => {
-        var params;
+        var params,
+            nextLoadUrl = getState().allPokemon.nextLoadUrl;
+
         dispatch(actions.requestPokemon());
-        var nextLoadUrl = getState().allPokemon.nextLoadUrl;
+
         if(nextLoadUrl) {
             params = nextLoadUrl;
         } else {
@@ -67,16 +69,16 @@ actions.receiveAPokemonAndTypes = (id) => {
     };
 }
 
-actions.getAPokemom = (id) => {
+actions.getAPokemon = (id) => {
     return (dispatch, getState) => {
-        if(typeof id === "string") {
+        if(typeof id === "string" && Number(id) === NaN) {
             var splitUrl = id.split("/");
             id = splitUrl[splitUrl.length-2];
         }
         var state = getState();
         if(!state.pokemonDetailed || !state.pokemonDetailed[id] || !state.pokemonDetailed[id].data) {
             dispatch(actions.requestAPokemon(id));
-            return PokeApi.getAPokemom(id)
+            return PokeApi.getAPokemon(id)
                 .then(data => {
                     dispatch(actions.receiveAPokemon(id, data));
                 });
@@ -92,7 +94,7 @@ actions.getAPokemom = (id) => {
 */
 actions.getAPokemonAndTypes = (id) => {
     return (dispatch, getState) => {
-        dispatch(actions.getAPokemom(id))
+        dispatch(actions.getAPokemon(id))
             .then(() => {
                 let state = getState(),
                     typePromises = [];
@@ -167,12 +169,12 @@ actions.initApp = () => {
         let state = getState();
 
         if(state.allPokemon.pokemon.length < config.POKERMON_PER_LOAD) {
-            dispatch(actions.getPokemom());
+            dispatch(actions.getPokemon());
         }
 
         if(!state.home || !state.home.featuredPokemon) {
             dispatch(actions.loadFeaturedPokemon());
-        } 
+        }
     }
 }
 

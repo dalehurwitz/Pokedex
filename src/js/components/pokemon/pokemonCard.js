@@ -1,76 +1,114 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PokeUtilities from "../../utilities/PokeUtilities";
 
-const pokemonCard = ({ pokemon, title, miniCard }) => {
-    const pokemonCardHandler = () => {
-        if(pokemon.loading) {
-            return (
-                <div>Loading featured pokemon...</div>
-            );
-        } else {
-            let height = PokeUtilities.getHeight(pokemon.data.height),
-                weight = PokeUtilities.getWeight(pokemon.data.weight);
-            return (
-                <div className="card__content">
-                    <figure className="card__thumbnail">
-                        {/*<img className="list__thumbnail__img" src={`images/pokemon/${pokemon.data.id}.png`} alt=""/>*/}
-                        <img src="https://placehold.it/150/749DAB/ffffff" alt={pokemon.data.name} width="150" height="150" />
-                    </figure>
-                    <section className="card__details">
-                        <h2 className="card__title">{pokemon.data.name}</h2>
-                        <div className="card__types">
-                            {pokemon.data.types.map((type, index) => {
-                                return ( 
-                                    <span key={index}>{type.type.name}</span> 
-                                );
-                            })}
-                        </div>
-                        <div>
-                            <span>Height: </span>
-                            <span>{`${height.metric} / ${height.imperial}`}</span>{/* 3.9 x height value from api = height in inches */}
-                        </div>
-                        <div>
-                            <span>Weight: </span>
-                            <span>{`${weight.metric} / ${weight.imperial}`}</span>
-                        </div>
-                    </section>
-                </div>
-            );
+class PokemonCard extends Component {
+    constructor() {
+        super();
+        this.pokemonCardHandler = this.pokemonCardHandler.bind(this);
+        this.cardTitle = this.cardTitle.bind(this);
+        this.cardInnerHandler = this.cardInnerHandler.bind(this);
+        this.getCardClasses = this.getCardClasses.bind(this);
+        this.showCardDetails  =this.showCardDetails.bind(this);
+    }
+
+    componentDidMount() {
+        if(this.props.onMount) {
+            this.props.onMount(this._cardThumbnail);
         }
     }
 
-    const cardTitle = () => {
-        if(title) {
-            return (
-                <div className="card__badge card__inner">{title}</div>
-            );
-        }
-    }
+    showCardDetails() {
+        let height = PokeUtilities.getHeight(this.props.pokemon.data.height),
+            weight = PokeUtilities.getWeight(this.props.pokemon.data.weight);
 
-    const cardInnerHandler = () => {
-        let className = "card__inner" + (title ? " card__inner--has-badge":"");
+        if(this.props.pokemon.loading) {
+            return false;
+        }
+
         return (
-            <div className={className}>
-                {pokemonCardHandler()}
+            <section className="card__details">
+                <h2 className="card__title">{this.props.pokemon.data.name}</h2>
+                <div className="card__types">
+                    {this.props.pokemon.data.types.map((type, index) => {
+                        return (
+                            <span key={index}>{type.type.name}</span>
+                        );
+                    })}
+                </div>
+                <div>
+                    <span>Height: </span>
+                    <span>{`${height.metric} / ${height.imperial}`}</span>{/* 3.9 x height value from api = height in inches */}
+                </div>
+                <div>
+                    <span>Weight: </span>
+                    <span>{`${weight.metric} / ${weight.imperial}`}</span>
+                </div>
+            </section>
+        )
+    }
+
+    pokemonCardHandler() {
+        let pokemonImg = null;
+
+        if(!this.props.pokemon.loading) {
+            pokemonImg = (
+                <img className="card__thumbnail__img" src={`/images/pokemon/${this.props.pokemon.data.id}.png`} width="150" height="150" alt=""/>
+            );
+        }
+
+        return (
+            <div className="card__content">
+                <figure
+                    className="card__thumbnail thumbnail__img"
+                    ref={(elem) => {
+                        if(elem) {
+                            this._cardThumbnail = elem;
+                        }
+                    }}
+                >
+                    {pokemonImg}
+                </figure>
+                {this.showCardDetails()}
             </div>
         );
     }
 
-    const getCardClasses = () => {
+    cardTitle() {
+        if(this.props.title) {
+            return (
+                <div className="card__badge card__inner">{this.props.title}</div>
+            );
+        }
+    }
+
+    cardInnerHandler() {
+        let className = "card__inner" + (this.props.title ? " card__inner--has-badge":"");
+        return (
+            <div className={className}>
+                {this.pokemonCardHandler()}
+            </div>
+        );
+    }
+
+    getCardClasses() {
         let className = "card";
-        if(miniCard) {
+        if(this.props.miniCard) {
             className += " card--mini";
         }
         return className;
     }
 
-    return (
-        <div className={getCardClasses()}>
-            {cardTitle()}
-            {cardInnerHandler()}
-        </div>
-    );
+    render() {
+        return (
+            <div
+                className={this.getCardClasses()}
+            >
+                {this.cardTitle()}
+                {this.cardInnerHandler()}
+            </div>
+        );
+    }
 }
 
-export default pokemonCard;
+export default PokemonCard;

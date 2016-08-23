@@ -1,18 +1,39 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import actions from "../../actions/actions";
 import Link from "react-router/lib/Link";
+import AnimatedThumbnail from "../../utilities/AnimatedThumbnail";
 
-const Pokemon = ({ pokemon, index }) => {
-    return (
-        <Link 
-            to="/"
-        >
-            <figure className="list__thumbnail__img">
-                {/*<img className="list__thumbnail__img" src={`images/pokemon/${index}.png`} alt=""/>*/}
-                <img src="https://placehold.it/150/749DAB/ffffff" alt="" width="150" height="150" />
-                <figcaption className="list__thumbnail__caption">{pokemon.name}</figcaption>
-            </figure>
-        </Link>
-    );
+class Pokemon extends Component {
+    constructor() {
+        super();
+        this.initAnimatedThumbnail = this.initAnimatedThumbnail.bind(this);
+    }
+
+    initAnimatedThumbnail(e) {
+        if(!this._thumbnailImg) return;
+        AnimatedThumbnail.setSource(this._thumbnailImg);
+    }
+
+    render() {
+        return (
+            <Link
+                to={`pokemon/${this.props.index}`}
+                onClick={this.initAnimatedThumbnail}
+            >
+                <figure className="list__thumbnail__img thumbnail__img"
+                    ref={(elem) => {
+                        if(!elem) return;
+                        this._thumbnailImg = elem.getElementsByTagName("img")[0];
+                    }}
+                >
+                    <img className="list__thumbnail__img" src={`images/pokemon/${this.props.index}.png`} alt="" />
+                    {/*<img className="list__thumbnail__img" src={`images/pokemon/${index}.png`} alt=""/>*/}
+                    <figcaption className="list__thumbnail__caption">{this.props.pokemon.name}</figcaption>
+                </figure>
+            </Link>
+        );
+    }
 };
 
 export default Pokemon;

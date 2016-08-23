@@ -1,0 +1,15 @@
+.thumbnail__img {
+    position: relative;
+    &:before {
+        content: "";
+        display: block;
+        width: 100%;
+        padding-top: 100%;
+    }
+    img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        @include imgResponsive();
+    }
+}

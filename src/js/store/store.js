@@ -9,8 +9,8 @@ function configureStore(initialState) {
     return createStore(
         rootReducer,
         applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
+            thunkMiddleware//,
+            // loggerMiddleware
         )
     );
 }

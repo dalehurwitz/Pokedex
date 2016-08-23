@@ -14,11 +14,11 @@ const PokeApi = {
         return Ajax.get(url);
     },
 
-    getAPokemom(id) {
+    getAPokemon(id) {
         let url;
 
         if(typeof id === "string") {
-            url = string;
+            url = id;
         } else {
             url = `${PokeApi.baseUrl}pokemon/${id}/`;
         }
