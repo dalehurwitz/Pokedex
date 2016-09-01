@@ -1,7 +1,9 @@
 import Ajax from "./Ajax";
+import mockData from "./mockData";
 
 const PokeApi = {
     baseUrl: "http://pokeapi.co/api/v2/",
+    mockData: true,
 
     getAllPokemon(params) {
         let url;
@@ -11,7 +13,8 @@ const PokeApi = {
         } else {
             url = `${PokeApi.baseUrl}pokemon/${PokeApi.serialise(params)}`;
         }
-        return Ajax.get(url);
+
+        return PokeApi.mockData ? Promise.resolve(mockData.pokemonList) : Ajax.get(url);
     },
 
     getAPokemon(id) {
@@ -23,12 +26,12 @@ const PokeApi = {
             url = `${PokeApi.baseUrl}pokemon/${id}/`;
         }
 
-        return Ajax.get(url);
+        return PokeApi.mockData ? Promise.resolve(mockData.pokemon) : Ajax.get(url);
     },
 
     getPokemonType(type) {
         let url = `${PokeApi.baseUrl}type/${type}/`;
-        return Ajax.get(url);
+        return PokeApi.mockData ? Promise.resolve(mockData.pokemonTypes[type]) : Ajax.get(url);
     },
 
     serialise(options) {

@@ -1,0 +1,11 @@
+.stats {
+    &__container {
+        display: flex;
+        padding: 0;
+        margin: 0;
+    }
+    &__bar {
+        list-style: none;
+        flex: 1;
+    }
+}

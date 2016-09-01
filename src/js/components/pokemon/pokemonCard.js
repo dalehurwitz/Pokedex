@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PokeUtilities from "../../utilities/PokeUtilities";
+import PokeStats from "../PokeStats/pokeStats";
 
 class PokemonCard extends Component {
     constructor() {
@@ -44,6 +45,7 @@ class PokemonCard extends Component {
                     <span>Weight: </span>
                     <span>{`${weight.metric} / ${weight.imperial}`}</span>
                 </div>
+                <PokeStats stats={this.props.pokemon.data.stats} />
             </section>
         )
     }
