@@ -104,9 +104,22 @@ function pokemonTypes(state = {}, action) {
 
 function home(state = {}, action) {
     switch(action.type) {
+        case actions.REQUEST_INITIAL_POKEMON_LOAD:
+        case actions.RECEIVE_INITIAL_POKEMON_LOAD:
+            return {
+                ...state,
+                loadingPokemon: action.loading
+            };
+        case actions.GET_FEATURED_POKEMON:
+            return {
+                ...state,
+                featuredPokemon: action.id,
+                loadingFeaturedPokemon: true
+            };
         case actions.SET_FEATURED_POKEMON:
             return {
-                featuredPokemon: action.id
+                ...state,
+                loadingFeaturedPokemon: false
             };
         default:
             return state;

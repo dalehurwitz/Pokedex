@@ -5,7 +5,7 @@ import PokemonCard from "./pokemonCard";
 const pokemonFeatured = ({ pokemon }) => {
     return (
         <PokemonCard
-            miniCard="true"
+            miniCard={true}
             pokemon={pokemon}
             title="Featured Pokemon"
         />

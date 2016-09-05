@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import PokeUtilities from "../../utilities/PokeUtilities";
 import PokeStats from "../PokeStats/pokeStats";
@@ -94,11 +94,11 @@ class PokemonCard extends Component {
     }
 
     getCardClasses() {
-        let className = "card";
+        let className = ["card"];
         if(this.props.miniCard) {
-            className += " card--mini";
+            className.push("card--mini");
         }
-        return className;
+        return className.join(" ");
     }
 
     render() {
@@ -112,5 +112,11 @@ class PokemonCard extends Component {
         );
     }
 }
+
+PokemonCard.propTypes = {
+    pokemon: PropTypes.object.isRequired,
+    title: PropTypes.string,
+    miniCard: PropTypes.bool
+};
 
 export default PokemonCard;

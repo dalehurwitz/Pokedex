@@ -141,41 +141,70 @@ actions.getPokemonType = (typeName) => {
         } else {
             return Promise.resolve();
         }
-    }
+    };
 }
 
 /** Home **/
 
+actions.GET_FEATURED_POKEMON = "GET_FEATURED_POKEMON";
+actions.getFeaturedPokemon = (id) => {
+    return {
+        type: actions.GET_FEATURED_POKEMON,
+        id
+    };
+};
 actions.SET_FEATURED_POKEMON = "SET_FEATURED_POKEMON";
 actions.setFeaturedPokemon = (id) => {
     return {
         type: actions.SET_FEATURED_POKEMON,
-        id
     };
-}
+};
 
 actions.loadFeaturedPokemon = () => {
     let randomPokemonId = Math.ceil(Math.random() * config.TOTAL_POKEMON);
     return (dispatch) => {
-        dispatch(actions.setFeaturedPokemon(randomPokemonId));
-        dispatch(actions.getAPokemonAndTypes(randomPokemonId));
+        Promise.all([
+            dispatch(actions.getFeaturedPokemon(randomPokemonId)),
+            dispatch(actions.getAPokemonAndTypes(randomPokemonId))
+        ]).then(() => {
+            dispatch(actions.setFeaturedPokemon());
+        });
     };
 }
 
 /** init app **/
+actions.REQUEST_INITIAL_POKEMON_LOAD = "REQUEST_INITIAL_POKEMON_LOAD";
+actions.requestInitialPokemonLoad = () => {
+    return {
+        type: actions.REQUEST_INITIAL_POKEMON_LOAD,
+        loading: true
+    };
+}
+
+actions.RECEIVE_INITIAL_POKEMON_LOAD = "RECEIVE_INITIAL_POKEMON_LOAD";
+actions.receiveInitialPokemonLoad = () => {
+    return {
+        type: actions.RECEIVE_INITIAL_POKEMON_LOAD,
+        loading: false
+    };
+}
 
 actions.initApp = () => {
     return (dispatch, getState) => {
         let state = getState();
 
         if(state.allPokemon.pokemon.length < config.POKERMON_PER_LOAD) {
-            dispatch(actions.getPokemon());
+            dispatch(actions.requestInitialPokemonLoad());
+            dispatch(actions.getPokemon())
+                .then(() => {
+                    dispatch(actions.receiveInitialPokemonLoad());
+                });
         }
 
         if(!state.home || !state.home.featuredPokemon) {
             dispatch(actions.loadFeaturedPokemon());
         }
-    }
+    };
 }
 
 export default actions;

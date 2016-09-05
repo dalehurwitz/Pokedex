@@ -1,4 +1,5 @@
 .stats {
+    $labelHeight: 30px;
     &__container {
         display: flex;
         padding: 0;
@@ -7,5 +8,29 @@
     &__bar {
         list-style: none;
         flex: 1;
+        position: relative;
+        height: 120px;
+        margin: 0 2px $labelHeight;
+        text-align: center;
+        background: rgba(#000, 0.05);
+        &__inner {
+            width: 100%;
+            height: 0%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            background: red;
+            transition: height 0.3s ease 0.5s;
+        }
+    }
+    &__label {
+        width: 100%;
+        height: $labelHeight;
+        position: absolute;
+        bottom: -$labelHeight;
+        padding-top: 2px;
+        font-size: 12px;
+        line-height: 12px;
+        text-transform: capitalize;
     }
 }
