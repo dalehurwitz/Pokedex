@@ -1,0 +1,9 @@
+.btn {
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    &--primary {
+        border: 1px solid grey;
+        background: #ff8b14;
+    }
+}

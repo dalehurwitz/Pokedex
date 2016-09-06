@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PokemonThumb from "./pokemonThumb";
 import actions from "../../actions/actions";
+import LoadMore from "../elements/loadMore";
 
 const PokemonList = ({ pokemon, loading, onLoadMore }) => {
     const renderPokemon = () => {
@@ -19,11 +20,7 @@ const PokemonList = ({ pokemon, loading, onLoadMore }) => {
                         </li>
                     )}
                 </ul>
-                <div>
-                    <button onClick={onLoadMore} >
-                        Load More
-                    </button>
-                </div>
+                <LoadMore onClick={onLoadMore} loading={loading.more} />
             </div>
         );
     };
@@ -37,7 +34,7 @@ const PokemonList = ({ pokemon, loading, onLoadMore }) => {
     };
 
     const pokemonListHandler = () => {
-        if(loading) {
+        if(loading.initial) {
             return renderLoader();
         }
         return renderPokemon();
@@ -53,7 +50,10 @@ const PokemonList = ({ pokemon, loading, onLoadMore }) => {
 const mapStateToPokemonListProps = (state) => {
     return {
         pokemon: state.allPokemon.pokemon,
-        loading: state.allPokemon.loading
+        loading: {
+            more: state.allPokemon.loading,
+            initial: state.home.loadingPokemon
+        }
     };
 };
 
