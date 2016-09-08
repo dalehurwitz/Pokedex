@@ -13,7 +13,6 @@ class Home extends Component {
         return (
             <div className="container">
                 <div className="wrapper">
-                    <h1>App</h1>
                     <PokemonFeatured />
                 </div>
                 <PokemonList />

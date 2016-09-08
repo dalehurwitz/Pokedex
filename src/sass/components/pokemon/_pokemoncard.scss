@@ -1,0 +1,68 @@
+.card {
+    &--mini {
+        padding: 0 5px;
+        @include tablet {
+            margin: 0 auto;
+            width: 75%;
+        }
+        @include desktop {
+            width: 60%;
+        }
+    }
+    &__inner {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,0.08);
+        box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.35);
+        background: #fff;
+        position: relative;
+        &--has-badge {
+            border-top-left-radius: 0;
+        }
+    }
+    &__inner--no-shadow {
+        box-shadow: none;
+    }
+    &__thumbnail {
+        width: 100%;
+        @media (min-width: 600px) {
+            width: 150px;
+            margin-right: 15px;
+            @include placeholderThumbnail();
+        }
+    }
+    &__badge {
+        display: inline-block;
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            left: 0;
+            bottom: -5px;
+            z-index: 88;
+            background: #fff;
+        }
+    }
+    &__content {
+        display: flex;
+        flex-flow: row wrap;
+        text-align: center;
+        @media (min-width: 600px) {
+            text-align: left;
+        }
+    }
+    &__details {
+        flex: 1;
+    }
+    &__title {
+        margin: 0 10px 20px 0;
+        display: inline-block;
+    }
+    &__types {
+        display: inline-block;
+    }
+}

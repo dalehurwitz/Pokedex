@@ -10,7 +10,7 @@ const PokemonList = ({ pokemon, loading, onLoadMore }) => {
             <div>
                 <ul className="list list--pad">
                     {pokemon.map((pokemon, index) =>
-                        <li className="list__thumbnail list__thumbnail--link" key={pokemon.name}>
+                        <li className="list__thumbnail list__thumbnail--link" key={pokemon.name+Math.random()}>
                             <div className="list__thumbnail__inner">
                                 <PokemonThumb
                                     pokemon={pokemon}

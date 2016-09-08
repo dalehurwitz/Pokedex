@@ -62,7 +62,7 @@ class PokemonCard extends Component {
         return (
             <div className="card__content">
                 <figure
-                    className="card__thumbnail thumbnail__img"
+                    className="card__thumbnail"
                     ref={(elem) => {
                         if(elem) {
                             this._cardThumbnail = elem;

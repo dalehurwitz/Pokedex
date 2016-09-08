@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import Nav from "./layout/navigation";
 
 const App = ({ children }) => {
     return (
         <div>
-            <nav>--- Navigation bar ---</nav>
+            <Nav />
             {children}
         </div>
     )

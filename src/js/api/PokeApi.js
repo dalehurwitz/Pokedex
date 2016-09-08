@@ -3,7 +3,7 @@ import mockData from "./mockData";
 
 const PokeApi = {
     baseUrl: "http://pokeapi.co/api/v2/",
-    mockData: false,
+    mockData: true,
 
     getAllPokemon(params) {
         let url;
