@@ -1,13 +1,11 @@
 .card {
-    &--mini {
-        padding: 0 5px;
-        @include tablet {
-            margin: 0 auto;
-            width: 75%;
-        }
-        @include desktop {
-            width: 60%;
-        }
+    padding: 0 5px;
+    @include tablet {
+        margin: 0 auto;
+        width: 75%;
+    }
+    @include desktop {
+        width: 60%;
     }
     &__inner {
         padding: 10px;

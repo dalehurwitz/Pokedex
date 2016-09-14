@@ -6,16 +6,11 @@ import PokeStats from "../PokeStats/pokeStats";
 class PokemonCard extends Component {
     constructor() {
         super();
-        this.pokemonCardHandler = this.pokemonCardHandler.bind(this);
-        this.cardTitle = this.cardTitle.bind(this);
-        this.cardInnerHandler = this.cardInnerHandler.bind(this);
-        this.getCardClasses = this.getCardClasses.bind(this);
-        this.showCardDetails  =this.showCardDetails.bind(this);
     }
 
     componentDidMount() {
         if(this.props.onMount) {
-            this.props.onMount(this._cardThumbnail);
+            // this.props.onMount(this._cardThumbnail);
         }
     }
 
@@ -93,19 +88,9 @@ class PokemonCard extends Component {
         );
     }
 
-    getCardClasses() {
-        let className = ["card"];
-        if(this.props.miniCard) {
-            className.push("card--mini");
-        }
-        return className.join(" ");
-    }
-
     render() {
         return (
-            <div
-                className={this.getCardClasses()}
-            >
+            <div className="card">
                 {this.cardTitle()}
                 {this.cardInnerHandler()}
             </div>
@@ -116,7 +101,8 @@ class PokemonCard extends Component {
 PokemonCard.propTypes = {
     pokemon: PropTypes.object.isRequired,
     title: PropTypes.string,
-    miniCard: PropTypes.bool
+    miniCard: PropTypes.bool,
+    onMount: PropTypes.func
 };
 
 export default PokemonCard;

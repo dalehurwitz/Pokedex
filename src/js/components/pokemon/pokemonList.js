@@ -3,14 +3,25 @@ import { connect } from "react-redux";
 import PokemonThumb from "./pokemonThumb";
 import actions from "../../actions/actions";
 import LoadMore from "../elements/loadMore";
+import config from "../../config";
 
 const PokemonList = ({ pokemon, loading, onLoadMore }) => {
+    const getAnimationDelay = index => {
+        return {
+            animationDelay: (index++ % config.POKERMON_PER_LOAD) / config.POKERMON_PER_LOAD * 500 + "ms"
+        }
+    };
+
     const renderPokemon = () => {
         return (
             <div>
                 <ul className="list list--pad">
                     {pokemon.map((pokemon, index) =>
-                        <li className="list__thumbnail list__thumbnail--link" key={pokemon.name+Math.random()}>
+                        <li
+                            className="list__thumbnail list__thumbnail--link"
+                            key={pokemon.name+index}
+                            style={getAnimationDelay(index)}
+                        >
                             <div className="list__thumbnail__inner">
                                 <PokemonThumb
                                     pokemon={pokemon}

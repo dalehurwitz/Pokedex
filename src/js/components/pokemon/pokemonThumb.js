@@ -7,12 +7,11 @@ import AnimatedThumbnail from "../../utilities/AnimatedThumbnail";
 class Pokemon extends Component {
     constructor() {
         super();
-        this.initAnimatedThumbnail = this.initAnimatedThumbnail.bind(this);
     }
 
     initAnimatedThumbnail(e) {
         if(!this._thumbnailImg) return;
-        AnimatedThumbnail.setSource(this._thumbnailImg);
+        // AnimatedThumbnail.setSource(this._thumbnailImg);
     }
 
     render() {

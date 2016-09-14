@@ -4,11 +4,12 @@ import PokemonCard from "./pokemonCard";
 
 const pokemonFeatured = ({ pokemon }) => {
     return (
-        <PokemonCard
-            miniCard={true}
-            pokemon={pokemon}
-            title="Featured Pokemon"
-        />
+        <div>
+            <PokemonCard
+                pokemon={pokemon}
+                title="Featured Pokemon"
+            />
+        </div>
     );
 }
 
