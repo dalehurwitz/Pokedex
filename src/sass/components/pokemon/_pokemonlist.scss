@@ -10,12 +10,6 @@
     &__thumbnail__inner {
         padding: 10px;
         border-radius: 8px;
-        border: 1px solid rgba(0,0,0,0.08);
-        box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.35);
-        background: #fff;
-        &:hover {
-            box-shadow: inset 0px 1px 6px -1px rgba(0, 0, 0, 0.35);
-        }
     }
 
     &__thumbnail {

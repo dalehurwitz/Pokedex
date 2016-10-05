@@ -22,7 +22,7 @@ const PokemonList = ({ pokemon, loading, onLoadMore }) => {
                             key={pokemon.name+index}
                             style={getAnimationDelay(index)}
                         >
-                            <div className="list__thumbnail__inner">
+                            <div className="list__thumbnail__inner panel panel--hover">
                                 <PokemonThumb
                                     pokemon={pokemon}
                                     index={index+1}

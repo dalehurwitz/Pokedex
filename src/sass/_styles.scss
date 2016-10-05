@@ -1,0 +1,19 @@
+@mixin card-style {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0px 2px 5px -1px rgba(0,0,0,0.35);
+    border-radius: 8px;
+}
+
+@mixin card-hover-style {
+    &:hover {
+        box-shadow: inset 0px 1px 6px -1px rgba(0, 0, 0, 0.35);
+    }
+}
+
+.panel {
+    @include card-style;
+    &--hover {
+        @include card-hover-style;
+    }
+}

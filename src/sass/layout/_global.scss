@@ -12,3 +12,16 @@ body {
 #app {
     padding-top: $navHeight;
 }
+
+.col-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.col-2-tablet {
+    width: 100%;
+    @include tablet {
+        width: 50%;
+        padding: 0 5px;
+    }
+}

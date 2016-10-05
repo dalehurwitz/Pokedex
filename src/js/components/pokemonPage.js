@@ -4,49 +4,41 @@ import { connect } from "react-redux";
 import PokemonCard from "./pokemon/pokemonCard";
 import AnimatedThumbnail from "../utilities/AnimatedThumbnail";
 import PokeUtilities from "../utilities/PokeUtilities";
+import DamageRelations from "./pokemon/DamageRelations";
 
-class PokemonPage extends Component {
-    constructor() {
-        super();
-        // this.loadPokemonCard = this.loadPokemonCard.bind(this);
-        // this.onPokemonCardMount = this.onPokemonCardMount.bind(this);
+const PokemonPage = ({ params, pokemon, types, getPokemonDetails }) => {
+
+    if(!pokemon) {
+        getPokemonDetails(params.pokemonId);
     }
 
-    componentWillMount() {
-        this.props.dispatch(actions.getAPokemonAndTypes(Number(this.props.params.pokemonId)));
-    }
-
-    onPokemonCardMount(targetElem) {
-        // AnimatedThumbnail.setTarget(targetElem);
-    }
-
-    componentWillUpdate(nextProps) {
-        if(nextProps.types.psychic && nextProps.types.psychic.damage_relations && nextProps.types.water && nextProps.types.water.damage_relations) {
-            PokeUtilities.getDamageRelations([nextProps.types.psychic, nextProps.types.water])
-        }
-    }
-
-    loadPokemonCard() {
-        if(this.props.pokemon) {
+    const loadPokemonCard = () => {
+        if(pokemon) {
             return (
                 <PokemonCard
-                    pokemon={this.props.pokemon}
+                    pokemon={pokemon}
                     miniCard={true}
-                    onMount={this.onPokemonCardMount}
                 />
             );
         }
     }
 
-    render() {
-        return (
-            <div className="container">
-                <div className="wrapper">
-                    {this.loadPokemonCard()}
-                </div>
-            </div>
-        );
+    const getPokemonTypes = () => {
+        if(pokemon && !pokemon.loading) {
+            return pokemon.data.types.map(type => types[type.type.name]);
+        }
     }
+
+    return (
+        <div className="container">
+            <div className="wrapper">
+                {loadPokemonCard()}
+            </div>
+            <div className="wrapper">
+                <DamageRelations types={getPokemonTypes()} />
+            </div>
+        </div>
+    );
 }
 
 const mapStateToPokemonPageProps = (state, ownProps) => {
@@ -56,4 +48,15 @@ const mapStateToPokemonPageProps = (state, ownProps) => {
     };
 }
 
-export default connect(mapStateToPokemonPageProps)(PokemonPage);
+const mapDispatchToPokemonPageProps = (dispatch) => {
+    return {
+        getPokemonDetails: (pokemonId) => {
+            dispatch(actions.getAPokemonAndTypes(Number(pokemonId)));
+        }
+    };
+}
+
+export default connect(
+    mapStateToPokemonPageProps,
+    mapDispatchToPokemonPageProps
+)(PokemonPage);

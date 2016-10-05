@@ -1,0 +1,31 @@
+.damage-relations {
+    text-align: center;
+
+    h4, h5 {
+        margin-top: 0;
+    }
+
+    h5 {
+        margin-bottom: 10px;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .damage {
+
+    }
+
+    .damage-level {
+        background: rgba(0,0,0,0.05);
+        padding: 10px;
+        box-shadow: inset 0px 0px 4px 4px rgba(0,0,0,0.05);
+        border-radius: 10px;
+        margin-bottom: 25px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

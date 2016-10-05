@@ -3,7 +3,9 @@
 @import "grid";
 @import "mediaqueries";
 @import "mixins";
+@import "helpers";
 @import "animations";
+@import "styles";
 @import "layout/global";
 @import "layout/mainnav";
 @import "components/pokemon/pokemonlist";
@@ -13,3 +15,6 @@
 @import "components/animatedthumbnail";
 @import "components/loadmore";
 @import "elements/button";
+@import "elements/badge";
+@import "poketypes";
+@import "components/damagerelations";

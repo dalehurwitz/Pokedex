@@ -8,6 +8,13 @@ const pokemonFeatured = ({ pokemon }) => {
             <PokemonCard
                 pokemon={pokemon}
                 title="Featured Pokemon"
+                link={true}
+                linkLabel={(
+                    <span>
+                        See more about&nbsp;
+                        <span className="capitalise">{pokemon.data.name}</span>
+                    </span>
+                )}
             />
         </div>
     );

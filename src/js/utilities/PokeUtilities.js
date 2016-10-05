@@ -73,7 +73,7 @@ const PokeUtilities = {
                 return previousVal;
             }, allDamageRelations);
         });
-        console.log(allDamageRelations);
+        return allDamageRelations;
     }
 }
 
