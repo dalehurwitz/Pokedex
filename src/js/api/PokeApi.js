@@ -1,9 +1,9 @@
 import Ajax from "./Ajax";
-import mockData from "./mockData";
+// import mockData from "./mockData";
 
 const PokeApi = {
     baseUrl: "http://pokeapi.co/api/v2/",
-    mockData: true,
+    mockData: false,
 
     getAllPokemon(params) {
         let url;

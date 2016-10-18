@@ -1,9 +1,8 @@
 # Pokedex
 
-A basic Pokedex built with React & Redux using the PokeApi!
+A basic Pokedex built with React & Redux using the PokeApi.
 
-## TODO
-* Replace gulp with Webpack. I was impressed with the speed of live reloading of Dan Abramov's Webpack config in the create-react-app project.
+[Demo](http://play.dalehurwitz.com/pokedex)
 
 ### Install Packages
 
@@ -22,7 +21,20 @@ npm install
 gulp
 ````
 
-### build
+### build dev
 ```
 gulp build
 ```
+
+### build prod
+```
+gulp build:prod
+```
+
+## TODO
+* Complete base UI including design and loaders
+* Add evolution tree
+* Add animated gradient bg
+* Add clientside caching
+* Automate image compression
+* Replace gulp for webpack

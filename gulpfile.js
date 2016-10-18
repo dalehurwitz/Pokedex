@@ -6,6 +6,7 @@ var gulp = require("gulp"),
     buffer = require("vinyl-buffer"),
     history = require("connect-history-api-fallback"),
     uglify = require("gulp-uglify"),
+    gulpif = require("gulp-if"),
     sass = require("gulp-sass"),
     autoprefixer = require("gulp-autoprefixer"),
     sourcemaps = require('gulp-sourcemaps');
@@ -26,13 +27,16 @@ function logError(e) {
     this.emit('end');
 }
 
+function isProd() {
+    return process.env.NODE_ENV === "production";
+}
+
 gulp.task("default", ["browserSync"], function() {
     gulp.watch(config.paths.js, ["build"]);
     gulp.watch(config.paths.sass, ["sass"]);
 });
 
 gulp.task("build", function () {
-    // process.env.NODE_ENV = 'production';
     return browserify({ entries: config.paths.entry, debug: true })
         .transform("babelify", {
             presets: ["es2015", "react"],
@@ -44,11 +48,19 @@ gulp.task("build", function () {
             this.emit('end');
         })
         .pipe(source("bundle.js"))
-        // .pipe(buffer())
-        // .pipe(uglify())
+        .pipe(gulpif(isProd, buffer()))
+        .pipe(gulpif(isProd, uglify()))
         .pipe(gulp.dest(config.paths.dist + "/js"))
-        .pipe(browserSync.stream())
+        .pipe(browserSync.stream());
+
+    process.env.NODE_ENV = "development";
 });
+
+gulp.task("setProd", function () {
+    process.env.NODE_ENV = "production";
+});
+
+gulp.task("build:prod", ["setProd", "build"]);
 
 gulp.task("sass", function() {
     return gulp.src(config.paths.sassMain)
