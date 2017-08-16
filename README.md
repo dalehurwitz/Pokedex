@@ -1,3 +1,5 @@
+*woops, this stopped working 😞. The API might have changed. *
+
 # Pokedex
 
 A basic Pokedex built with React & Redux using the PokeApi.
